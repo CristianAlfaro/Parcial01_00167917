@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,8 +32,10 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "A jugar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+            val intento1 = Intent(this, NewGameActivity::class.java)
+            startActivity(intento1)
         }
 
     }
