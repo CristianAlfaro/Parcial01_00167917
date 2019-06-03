@@ -13,13 +13,19 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.example.myapplication.Adapter.GameAdapter
 import com.example.myapplication.Fragment.MainFragment
+import com.example.myapplication.ViewModel.GameViewModel
 
 class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener/*,NavigationView.OnNavigationItemSelectedListener*/ {
     override fun onFragmentInteraction(uri: Uri) {
 
     }
 
+    private val newGameActivityRequestCode = 1
+    private lateinit var gameViewModel: GameViewModel
     private lateinit var mainFragment: MainFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +36,8 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
         mainFragment = MainFragment()
         supportFragmentManager.beginTransaction().add(R.id.fragment, mainFragment).commit()
 
+
+/*
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "A jugar", Snackbar.LENGTH_LONG)
@@ -37,7 +45,7 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
             val intento1 = Intent(this, NewGameActivity::class.java)
             startActivity(intento1)
         }
-
+*/
     }
 
 

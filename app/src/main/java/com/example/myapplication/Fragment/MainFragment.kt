@@ -1,19 +1,26 @@
 package com.example.myapplication.Fragment
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.Adapter.GameAdapter
+import com.example.myapplication.Entities.Game
+import com.example.myapplication.NewGameActivity
 import com.example.myapplication.R
 import com.example.myapplication.ViewModel.GameViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.content_main.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +29,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private lateinit var gameViewModel: GameViewModel
+private val newGameActivityRequestCode = 1
 
 class MainFragment : Fragment() {
     private var param1: String? = null
@@ -34,9 +42,12 @@ class MainFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
+
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -44,6 +55,8 @@ class MainFragment : Fragment() {
         initAll(view)
         return view
     }
+
+
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -79,11 +92,11 @@ class MainFragment : Fragment() {
             }
     }
 
-    fun initAll(view: View){
+    fun initAll(view: View) {
 
 
         val recyclerView = view.recyclerview
-        val adapter = object : GameAdapter(view.context){
+        val adapter = object : GameAdapter(view.context) {
             override fun addListener(holder: GameViewHolder, team1: String, team2: String, point1: Int, point2: Int) {
                 holder.game_container.setOnClickListener {
                     /*
@@ -92,7 +105,6 @@ class MainFragment : Fragment() {
                     */
                 }
             }
-
         }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -105,5 +117,36 @@ class MainFragment : Fragment() {
             words?.let { adapter.setGames(it) }
         })
 
+        val fab: FloatingActionButton = view.findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(context, NewGameActivity::class.java)
+            startActivityForResult(intent, newGameActivityRequestCode)
+
+
+        }
+
+
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intentData)
+
+        if (requestCode == newGameActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.let { data ->
+                val game = Game(
+                    data.getIntExtra(NewGameActivity.ID,0),
+                    data.getStringExtra(NewGameActivity.TEAM1),
+                    data.getStringExtra(NewGameActivity.TEAM2),
+                    data.getIntExtra(NewGameActivity.POINT1,0),
+                    data.getIntExtra(NewGameActivity.POINT2,0)
+                )
+                Log.d("LLEGUE HASTA AQUI?","SI SI LLEGUE")
+                gameViewModel.insert(game)
+            }
+        } else {
+            Toast.makeText(context, "hola2",Toast.LENGTH_LONG).show()
+        }
+    }
+
+
 }

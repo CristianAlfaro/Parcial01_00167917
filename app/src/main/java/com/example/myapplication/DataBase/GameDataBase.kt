@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [Game::class], version = 1)
+@Database(entities = [Game::class], version = 3)
 abstract class GameDataBase : RoomDatabase() {
     abstract fun gameDao(): GameDao
 
@@ -46,7 +46,7 @@ abstract class GameDataBase : RoomDatabase() {
                 // comment out the following line.
                 INSTANCE?.let { database ->
                     scope.launch {
-                        populateDatabase(database.gameDao())
+                        ///populateDatabase(database.gameDao())
                     }
                 }
             }
@@ -57,19 +57,19 @@ abstract class GameDataBase : RoomDatabase() {
             val True:Boolean = true
             val False:Boolean = false
 
-            var game = Game( 1, "Lakers", "Warrios", 130, 120)
+            var game = Game( 0, "Lakers", "Warrios", 130, 120)
             gameDao.insert(game)
 
-            game = Game( 2, "Lakers", "Warrios", 130, 120)
+            game = Game( 0, "Lakers", "Warrios", 130, 120)
             gameDao.insert(game)
 
-            game = Game( 3, "Lakers", "Warrios", 130, 120)
+            game = Game( 0, "Lakers", "Warrios", 130, 120)
             gameDao.insert(game)
 
-            game = Game( 4, "Lakers", "Warrios", 130, 120)
+            game = Game( 0, "Lakers", "Warrios", 130, 120)
             gameDao.insert(game)
 
-            game = Game( 5, "Lakers", "Warrios", 130, 120)
+            game = Game( 0, "Lakers", "Warrios", 130, 120)
             gameDao.insert(game)
 
 

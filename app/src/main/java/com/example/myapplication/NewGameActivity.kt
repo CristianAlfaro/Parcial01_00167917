@@ -1,19 +1,35 @@
 package com.example.myapplication
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.ViewModel.GameViewModel
+import kotlinx.android.synthetic.main.activity_new_game.*
+import kotlinx.android.synthetic.main.recycle_view_item.*
 
 
 class NewGameActivity : AppCompatActivity() {
 
 
+    private lateinit var edteam1: EditText
+    private lateinit var edteam2: EditText
+    private lateinit var tvpoint1: TextView
+    private lateinit var tvpoint2: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_game)
+
+        edteam1 = findViewById(R.id.team1)
+        edteam2 = findViewById(R.id.team2)
+        tvpoint1 = findViewById(R.id.tv_marcador1)
+        tvpoint2 = findViewById(R.id.tv_marcador2)
 
 
         val tv_t1 = findViewById<TextView>(R.id.tv_marcador1)
@@ -29,7 +45,7 @@ class NewGameActivity : AppCompatActivity() {
         val btn_save = findViewById<Button>(R.id.btn_save)
 
         btn_save.setOnClickListener { v ->
-            Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show()
+            save()
         }
         btn1_t1.setOnClickListener { v ->
             suma(tv_t1,1)
@@ -66,4 +82,32 @@ class NewGameActivity : AppCompatActivity() {
         tv.setText("" + cont)
     }
 
+    fun save (){
+        val replyIntent = Intent()
+        if (TextUtils.isEmpty(team1.text) and TextUtils.isEmpty(team2.text)) {
+            setResult(Activity.RESULT_CANCELED, replyIntent)
+        }
+        else {
+            val team1 = edteam1.text.toString()
+            val team2 = edteam2.text.toString()
+            val point1 = Integer.parseInt(tvpoint1.text.toString())
+            val point2 = Integer.parseInt(tvpoint2.text.toString())
+            val id: Int = 0
+            replyIntent.putExtra(TEAM1, team1)
+            replyIntent.putExtra(TEAM2, team2)
+            replyIntent.putExtra(POINT1, point1)
+            replyIntent.putExtra(POINT2, point2)
+            replyIntent.putExtra(ID, id)
+            setResult(Activity.RESULT_OK, replyIntent)
+            Toast.makeText(this, "Guardado con exito", Toast.LENGTH_SHORT).show()
+        }
+        finish()
+    }
+    companion object {
+        const val TEAM1 = "team1"
+        const val TEAM2 = "team2"
+        const val POINT1 = "point1"
+        const val POINT2= "point2"
+        const val ID= "id"
+    }
 }
