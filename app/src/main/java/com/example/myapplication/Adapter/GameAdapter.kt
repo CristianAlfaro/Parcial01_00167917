@@ -33,7 +33,7 @@ abstract class GameAdapter internal constructor(
     context: Context
 ) : RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
 
-    abstract fun addListener(holder: GameViewHolder, team1: String, team2: String, point1: Int, point2: Int)
+    abstract fun addListener(holder: GameViewHolder,id: Int, team1: String, team2: String, point1: Int, point2: Int)
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var games = emptyList<Game>() // Cached copy of words
@@ -59,7 +59,18 @@ abstract class GameAdapter internal constructor(
         holder.point1.text = current.point1.toString()
         holder.point2.text = current.point2.toString()
 
-        addListener(holder,current.team1,current.team2, current.point1, current.point2)
+        var x:Int = Integer.parseInt(holder.point1.text.toString())
+        var y:Int = Integer.parseInt(holder.point2.text.toString())
+        if (x > y){
+            holder.point1.setTextColor(R.color.colorAccent)
+        }else if (y > x){
+            holder.point2.setTextColor(R.color.colorAccent)
+        } else {
+            holder.point1.setTextColor(R.color.colorAccent)
+            holder.point2.setTextColor(R.color.colorAccent)
+        }
+
+        addListener(holder,current.id, current.team1,current.team2, current.point1, current.point2)
 
     }
 

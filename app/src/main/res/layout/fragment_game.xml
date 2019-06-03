@@ -1,0 +1,76 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.example.myapplication.Fragment.GameFragment">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="15dp"
+            card_view:cardUseCompatPadding="true">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_weight="1">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:layout_weight="1" android:gravity="center">
+                    <TextView
+                            android:text="TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/equipo1" android:textSize="18sp"
+                            android:textColor="#F7000000" android:layout_weight="1"/>
+                    <ImageView
+                            android:src="@drawable/balon"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp" android:id="@+id/imageView3"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:layout_weight="1" android:gravity="center">
+                    <TextView
+                            android:text="TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/equipo2" android:layout_weight="1"
+                            android:textColor="#000000" android:textSize="18sp"/>
+                    <ImageView
+                            android:src="@drawable/balon"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp" android:id="@+id/imageView2"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/marcador1_tv" android:layout_weight="1"
+                        android:textSize="50sp" android:gravity="center|end" android:layout_marginEnd="5dp"/>
+                <TextView
+                        android:text="-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/textView6"
+                        android:textColor="#020202" android:textSize="50sp" android:gravity="center"/>
+                <TextView
+                        android:text="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/marcador2_tv" android:layout_weight="1"
+                        android:textSize="50sp" android:gravity="center|start" android:layout_marginStart="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

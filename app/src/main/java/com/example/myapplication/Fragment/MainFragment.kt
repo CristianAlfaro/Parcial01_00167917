@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,21 +19,22 @@ import com.example.myapplication.NewGameActivity
 import com.example.myapplication.R
 import com.example.myapplication.ViewModel.GameViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.content_main.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-private lateinit var gameViewModel: GameViewModel
-private val newGameActivityRequestCode = 1
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), GameFragment.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var gameViewModel: GameViewModel
+    private val newGameActivityRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,13 +97,12 @@ class MainFragment : Fragment() {
 
         val recyclerView = view.recyclerview
         val adapter = object : GameAdapter(view.context) {
-            override fun addListener(holder: GameViewHolder, team1: String, team2: String, point1: Int, point2: Int) {
+            override fun addListener(holder: GameViewHolder,id: Int, team1: String, team2: String, point1: Int, point2: Int)  {
                 holder.game_container.setOnClickListener {
-                    /*
-                    val bookFragment = BookFragment.newInstance(titulo, autor, favorito, caratula,editorial, resumen, tags)
-                    fragmentManager!!.beginTransaction().replace(R.id.main_fragment_content,bookFragment).addToBackStack("").commit()
-                    */
+                    val gameFragment = GameFragment.newInstance(id,team1,team2,point1,point2)
+                    fragmentManager!!.beginTransaction().replace(R.id.fragment,gameFragment).addToBackStack("").commit()
                 }
+
             }
         }
         recyclerView.adapter = adapter
@@ -140,11 +139,10 @@ class MainFragment : Fragment() {
                     data.getIntExtra(NewGameActivity.POINT1,0),
                     data.getIntExtra(NewGameActivity.POINT2,0)
                 )
-                Log.d("LLEGUE HASTA AQUI?","SI SI LLEGUE")
                 gameViewModel.insert(game)
             }
         } else {
-            Toast.makeText(context, "hola2",Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "No habian datos suficientes",Toast.LENGTH_LONG).show()
         }
     }
 
